@@ -4,8 +4,8 @@ local desktop_dir = os.getenv("USERPROFILE") or os.getenv("HOME")
 if desktop_dir ~= nil and desktop_dir ~= "" then
     out_directory = utils.join_path(desktop_dir, "Desktop")
 end
-local py_path = directory .. "\\danmaku2ass.py"
-local py_path2 = directory .. "\\niconvert.pyw"
+local py_path = utils.join_path(directory, "danmaku2ass.py")
+local py_path2 = utils.join_path(directory, "niconvert.pyw")
 local xmlfile = nil
 local assfile = nil
 local created_files = {}
