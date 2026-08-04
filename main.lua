@@ -1,7 +1,9 @@
--- local utils = require 'mp.utils'
--- local directory = mp.find_config_file(".")
--- local direc = utils.split_path(directory)
+local utils = require 'mp.utils'
 local directory = mp.get_script_directory()
+local desktop_dir = os.getenv("USERPROFILE") or os.getenv("HOME")
+if desktop_dir ~= nil and desktop_dir ~= "" then
+    out_directory = utils.join_path(desktop_dir, "Desktop")
+end
 local py_path = directory .. "\\danmaku2ass.py"
 local py_path2 = directory .. "\\niconvert.pyw"
 local xmlfile = nil
@@ -39,6 +41,8 @@ function handle_downloaded()
 		end
 		xmlfile = path
 		assfile = path:gsub("%.xml$", ".ass")
+		local _, filename = utils.split_path(assfile)
+  		assfile = utils.join_path(out_directory, filename)
 		created_files[xmlfile] = true
 		created_files[assfile] = true
 		local convert = { 'python', py_path, '-o', assfile, '-s', '1920x1080', '-fs', '63', '-a', '0.95', '-dm', '10', xmlfile }
